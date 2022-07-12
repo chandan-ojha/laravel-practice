@@ -71,7 +71,7 @@
                         <td>
                             <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
                             <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                            <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
                     @endforeach      
@@ -267,13 +267,14 @@
             country:country,
      		_token:_token
         },
-        success :function(response)
+        success:function(response)
         {
-            $('#sid' +response.id+ 'td:nth-child(1)').text(response.name);
-            $('#sid' +response.id+ 'td:nth-child(1)').text(response.address);
-            $('#sid' +response.id+ 'td:nth-child(1)').text(response.city);
-            $('#sid' +response.id+ 'td:nth-child(1)').text(response.pin_code);
-            $('#sid' +response.id+ 'td:nth-child(1)').text(response.country);
+            $('#sid' + response.id + 'td:nth-child(1)').text(response.id);
+            $('#sid' + response.id + 'td:nth-child(2)').text(response.name);
+            $('#sid' + response.id + 'td:nth-child(3)').text(response.address);
+            $('#sid' + response.id + 'td:nth-child(4)').text(response.city);
+            $('#sid' + response.id + 'td:nth-child(5)').text(response.pin_code);
+            $('#sid' + response.id + 'td:nth-child(6)').text(response.country);
             $('#editStudentModal').modal('toggle');
             $("#editstudentForm")[0].reset();
         }
@@ -282,6 +283,28 @@
        
     });
   }
+</script>
+
+<!--Delete Student Record-->
+<script >
+    function deleteStudent(id)
+    {
+        if(confirm("Do you really want to delete this record?"))
+        {
+            $.ajax({
+                url:'/student/'+id,
+                type:'DELETE',
+                data:{
+                    _token:$("input[name=_token]").val()
+                },
+                success:function(response)
+                {
+                    $("#sid"+id).remove();
+                }
+
+            });
+        }
+    }
 </script>
 
 <!-- JS here -->
