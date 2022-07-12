@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/students',[StudentController::class,'index']);
 Route::post('/add-student',[StudentController::class,'addStudent'])->name('student.add');
+Route::get('/student/{id}',[StudentController::class,'getStudentById']);
+Route::put('/student',[StudentController::class,'updateStudent'])->name('student.update');
 
 
 

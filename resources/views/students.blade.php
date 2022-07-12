@@ -55,7 +55,7 @@
                 </thead>
                 <tbody>
                     @foreach($students as $student)
-                    <tr>
+                    <tr id="sid{{$student->id}}">
                         <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
@@ -70,7 +70,7 @@
                         <td>{{ $student->country }}</td>
                         <td>
                             <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                            <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                            <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                             <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
@@ -93,7 +93,7 @@
     </div>  
 </div>
 
-<!-- Add Modal HTML -->
+<!-- Add Student Modal HTML -->
 <div id="addStudentModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -126,7 +126,49 @@
 				</div>	
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-success" value="Submit">
+                    <button type="submit" class="btn btn-success">Submit</button>
+				</div>
+			</form>
+           </div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Student Modal HTML -->
+<div id="editStudentModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+            <div class="modal-header">						
+				<h4 class="modal-title">Update Student Info</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+            <div class="modal-body">
+			<form id="editstudentForm">
+                @csrf
+                <input type="hidden" id="id" name="id">				
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name2">
+				</div>
+				<div class="form-group">
+					<label for="address">Address</label>
+					<input type="text" class="form-control" id="address2">
+				</div>
+				<div class="form-group">
+					<label for="city">City</label>
+					<input type="text" class="form-control" id="city2">
+				</div>
+				<div class="form-group">
+					<label for="pin_code">Pin Code</label>
+					<input type="text" class="form-control"  id="pin_code2">
+				</div>
+                <div class="form-group">
+					<label for="country">Country</label>
+					<input type="text" class="form-control" id="country2">
+				</div>	
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<button type="submit" class="btn btn-success">Update</button>
 				</div>
 			</form>
            </div>
@@ -160,12 +202,12 @@
 <script >
 	$("#studentForm").submit(function(e){
      e.preventDefault();
-     let name=$("#name").val();
-     let address=$("#address").val();
-     let city=$("#city").val();
-     let pin_code=$("#pin_code").val();
-     let country=$("#country").val();
-     let _token =$("input[name=_token]").val();
+     let name = $("#name").val();
+     let address = $("#address").val();
+     let city = $("#city").val();
+     let pin_code = $("#pin_code").val();
+     let country = $("#country").val();
+     let _token = $("input[name=_token]").val();
      $.ajax({
      	url:"{{route('student.add')}}",
      	type:"POST",
@@ -188,6 +230,58 @@
      	}
      });
 	});
+</script>
+
+<!--Edit Student -->
+<script>
+  function editStudent(id)
+  {
+    $.get('/student/'+id,function(student){
+            $("#id").val(student.id);
+            $("#name2").val(student.name);
+            $("#address2").val(student.address);
+            $("#city2").val(student.city);
+            $("#pin_code2").val(student.pin_code);
+            $("#country2").val(student.country);
+            $("#editStudentModal").modal('toggle');
+        });
+
+    $("#editstudentForm").submit(function(e){
+       e.preventDefault();
+       let id = $("#id").val();
+       let name = $("#name2").val();
+       let address = $("#address2").val();
+       let city = $("#city2").val();
+       let pin_code = $("#pin_code2").val();
+       let country = $("#country2").val();
+       let _token = $("input[name = _token]").val();
+       $.ajax({ 
+        url:"{{route('student.update')}}",
+        type:"PUT",
+        data:{
+            id:id,
+            name:name,
+            address:address,
+            city:city,
+            pin_code:pin_code,
+            country:country,
+     		_token:_token
+        },
+        success :function(response)
+        {
+            $('#sid' +response.id+ 'td:nth-child(1)').text(response.name);
+            $('#sid' +response.id+ 'td:nth-child(1)').text(response.address);
+            $('#sid' +response.id+ 'td:nth-child(1)').text(response.city);
+            $('#sid' +response.id+ 'td:nth-child(1)').text(response.pin_code);
+            $('#sid' +response.id+ 'td:nth-child(1)').text(response.country);
+            $('#editStudentModal').modal('toggle');
+            $("#editstudentForm")[0].reset();
+        }
+
+       });
+       
+    });
+  }
 </script>
 
 <!-- JS here -->
