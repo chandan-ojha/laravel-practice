@@ -25,6 +25,7 @@ Route::delete('/student/{id}',[StudentController::class,'deleteStudent']);
 Route::delete('/selected-students',[StudentController::class,'deleteCheckedStudents'])->name('student.deleteSelected');
 Route::get('/export-excel-students',[StudentController::class,'exportExcelStudents'])->name('export-excel-students');
 Route::get('/export-csv-students',[StudentController::class,'exportCSVStudents'])->name('export-csv-students');
+Route::get('/download-pdf-students',[StudentController::class,'downloadPDFStudents'])->name('download-pdf-students');
 
 
 

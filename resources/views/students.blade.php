@@ -31,7 +31,7 @@
                            <div class="dropdown-menu">
                                <a class="dropdown-item" href="{{route('export-excel-students')}}">Excel</a>
                                <a class="dropdown-item" href="{{route('export-csv-students')}}">CSV</a>
-                               <a class="dropdown-item" href="#">PDF</a>
+                               <a class="dropdown-item" href="{{route('download-pdf-students')}}">PDF</a>
                             </div>
                         </div>
                           <!-- Import button -->

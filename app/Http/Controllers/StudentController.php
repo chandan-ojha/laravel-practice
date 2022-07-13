@@ -6,6 +6,7 @@ use App\Exports\StudentExport;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Excel;
+use PDF;
 
 class StudentController extends Controller
 {
@@ -70,6 +71,13 @@ class StudentController extends Controller
     //~ Export Students Table Data to CSV Format
     public function exportCSVStudents(){
         return Excel::download(new StudentExport,'studentlist.csv');
+    }
+
+    //~ Export Students Table Data to PDF
+    public function downloadPDFStudents(){
+        $students = Student::all();
+        $pdf = PDF::loadView('students-pdf',compact('students'));
+        return $pdf->download('students.pdf');
     }
 
 }
