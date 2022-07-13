@@ -22,10 +22,28 @@
                     <div class="col-sm-8"><h5>All<b> Students</b></h5></div>
                     <div class="col-sm-8">
                         <a href="#" type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i> Add New</a>
-                        <button href="#" type="button" class="btn btn-danger" id="deleteAllSelectedRecord"><i class="fa fa-minus"></i> Delete</button>
-                        <button type="button" class="btn btn-success add-new"><i class="fa fa-file"></i> Export Excell</button>
-                        <button type="button" class="btn btn-success add-new"><i class="fa fa-file"></i> Import Excell / CSV</button>
-                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-file"></i> Export Pdf</button>
+                        <a href="#" type="button" class="btn btn-danger" id="deleteAllSelectedRecord"><i class="fa fa-minus"></i> Delete</a>
+                        <!-- Export button -->
+                        <div class="btn-group">
+                           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fa fa-file"></i>  Export
+                            </button>
+                           <div class="dropdown-menu">
+                               <a class="dropdown-item" href="{{route('export-excel-students')}}">Excel</a>
+                               <a class="dropdown-item" href="{{route('export-csv-students')}}">CSV</a>
+                               <a class="dropdown-item" href="#">PDF</a>
+                            </div>
+                        </div>
+                          <!-- Import button -->
+                          <div class="btn-group">
+                           <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fa fa-file"></i>  Import
+                            </button>
+                           <div class="dropdown-menu">
+                               <a class="dropdown-item" href="#">Excel</a>
+                               <a class="dropdown-item" href="#">CSV</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="search-box">

@@ -23,7 +23,8 @@ Route::get('/student/{id}',[StudentController::class,'getStudentById']);
 Route::put('/student',[StudentController::class,'updateStudent'])->name('student.update');
 Route::delete('/student/{id}',[StudentController::class,'deleteStudent']);
 Route::delete('/selected-students',[StudentController::class,'deleteCheckedStudents'])->name('student.deleteSelected');
-
+Route::get('/export-excel-students',[StudentController::class,'exportExcelStudents'])->name('export-excel-students');
+Route::get('/export-csv-students',[StudentController::class,'exportCSVStudents'])->name('export-csv-students');
 
 
 

@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exports\StudentExport;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Excel;
 
 class StudentController extends Controller
 {
@@ -57,6 +60,16 @@ class StudentController extends Controller
         $ids = $request->ids;
         Student::whereIn('id',$ids)->delete();
         return response()->json(['success' => "Students have been deleted"]);
+    }
+
+    //~ Export Students Table Data to Excel Format
+    public function exportExcelStudents(){
+        return Excel::download(new StudentExport,'studentlist.xlsx');
+    }
+
+    //~ Export Students Table Data to CSV Format
+    public function exportCSVStudents(){
+        return Excel::download(new StudentExport,'studentlist.csv');
     }
 
 }
