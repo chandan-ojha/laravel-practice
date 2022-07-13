@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\StudentExport;
+use App\Imports\StudentImport;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Excel;
@@ -80,4 +81,9 @@ class StudentController extends Controller
         return $pdf->download('students.pdf');
     }
 
+    //~ Import Students Table Data to excel/csv
+    public function importStudents(Request $request){
+        $studentdata = Excel::import(new StudentImport,$request->file);
+        return redirect()->back()->with('studentdata');
+    }
 }

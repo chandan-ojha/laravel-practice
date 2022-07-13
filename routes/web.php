@@ -26,7 +26,7 @@ Route::delete('/selected-students',[StudentController::class,'deleteCheckedStude
 Route::get('/export-excel-students',[StudentController::class,'exportExcelStudents'])->name('export-excel-students');
 Route::get('/export-csv-students',[StudentController::class,'exportCSVStudents'])->name('export-csv-students');
 Route::get('/download-pdf-students',[StudentController::class,'downloadPDFStudents'])->name('download-pdf-students');
-
+Route::post('/import-students',[StudentController::class,'importStudents'])->name('import-students');
 
 
 

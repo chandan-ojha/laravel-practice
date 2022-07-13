@@ -40,8 +40,8 @@
                               <i class="fa fa-file"></i>  Import
                             </button>
                            <div class="dropdown-menu">
-                               <a class="dropdown-item" href="#">Excel</a>
-                               <a class="dropdown-item" href="#">CSV</a>
+                               <a href="#" class="dropdown-item" data-toggle="modal" data-target="#importStudentModal">Excel</a>
+                               <a href="#" class="dropdown-item" data-toggle="modal" data-target="#importStudentModal">CSV</a>
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,31 @@
             </div>
         </div>
     </div>  
+</div>
+
+<!-- Import data to excel or csv -->
+<div id="importStudentModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+            <div class="modal-header">						
+				<h4 class="modal-title">Import Student Data</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+            <div class="modal-body">
+			<form method="POST" enctype="multipart/form-data" action="{{route('import-students')}}">
+                @csrf				
+				<div class="form-group">
+                   <label for="file">Choose Excel/CSV</label>
+                   <input type="file" name="file" class="form-control"/>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <button type="submit" class="btn btn-success">Submit</button>
+				</div>
+			</form>
+           </div>
+		</div>
+	</div>
 </div>
 
 <!-- Add Student Modal HTML -->
