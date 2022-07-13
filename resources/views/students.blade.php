@@ -22,9 +22,9 @@
                     <div class="col-sm-8"><h5>All<b> Students</b></h5></div>
                     <div class="col-sm-8">
                         <a href="#" type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i> Add New</a>
-                        <button href="#deleteEmployeeModal" type="button" class="btn btn-danger" data-toggle="modal"><i class="fa fa-minus"></i> Delete</button>
+                        <button href="#" type="button" class="btn btn-danger" id="deleteAllSelectedRecord"><i class="fa fa-minus"></i> Delete</button>
                         <button type="button" class="btn btn-success add-new"><i class="fa fa-file"></i> Export Excell</button>
-                        <button type="button" class="btn btn-success add-new"><i class="fa fa-file"></i> Import Excell</button>
+                        <button type="button" class="btn btn-success add-new"><i class="fa fa-file"></i> Import Excell / CSV</button>
                         <button type="button" class="btn btn-primary add-new"><i class="fa fa-file"></i> Export Pdf</button>
                     </div>
                     <div class="col-sm-4">
@@ -38,12 +38,7 @@
             <table class="table table-striped table-hover table-bordered" id="studentTable">
                 <thead>
                     <tr>
-                        <th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-						</th>
+                        <th><input type="checkbox" id="chkCheckAll"> </th>
                         <th>ID</th>
                         <th>Name <i class="fa fa-sort"></i></th>
                         <th>Address</th>
@@ -56,12 +51,7 @@
                 <tbody>
                     @foreach($students as $student)
                     <tr id="sid{{$student->id}}">
-                        <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
-								<label for="checkbox1"></label>
-							</span>
-						</td>
+                        <td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$student->id}}"/> </td>
                         <td>{{ $student->id }}</td>
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->address }}</td>
@@ -223,7 +213,7 @@
      	{
      		if(response)
      		{
-     			$("#studentTable tbody").prepend('<tr><td><span class="custom-checkbox"><input type="checkbox" id="checkbox1" name="options[]" value="1"><label for="checkbox1"></label></span></td><td>'+response.id+'</td> <td>'+response.name+'</td> <td>'+response.address+'</td> <td>'+response.city+'</td> <td>'+response.pin_code+'</td> <td>'+response.country+'</td><td><a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a> <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td></tr>');
+     			$("#studentTable tbody").prepend('<tr><td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$student->id}}"/></td> <td>'+response.id+'</td> <td>'+response.name+'</td> <td>'+response.address+'</td> <td>'+response.city+'</td> <td>'+response.pin_code+'</td> <td>'+response.country+'</td><td><a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>  <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td></tr>');
      			$("#studentForm")[0].reset();
      			$("#addStudentModal").modal('hide');
      		}
@@ -305,6 +295,39 @@
             });
         }
     }
+</script>
+
+<!--Select all data & delete multiple student record-->
+<script >
+    $(function(e){ 
+        $("#chkCheckAll").click(function(){
+            $(".checkBoxClass").prop('checked',$(this).prop('checked'));
+        });
+
+        $("#deleteAllSelectedRecord").click(function(e){
+            e.preventDefault();
+            var allids=[];
+
+            $("input:checkbox[name = ids]:checked").each(function(){
+                allids.push($(this).val());
+            });
+
+            $.ajax({
+                url:"{{route('student.deleteSelected')}}",
+                type: "DELETE",
+                data: {
+                    _token:$("input[name=_token]").val(),
+                    ids : allids
+                },
+                success:function(response){
+                    $.each(allids,function(key,val){
+                        $("#sid"+val).remove();
+                    });
+                }
+            });
+        });
+
+    });
 </script>
 
 <!-- JS here -->
