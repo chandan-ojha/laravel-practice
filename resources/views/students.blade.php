@@ -59,7 +59,7 @@
                         <td>{{ $student->pin_code }}</td>
                         <td>{{ $student->country }}</td>
                         <td>
-                            <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
+                            <a href="javascript:void(0)" onclick="viewStudent({{$student->id}})" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
                             <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                             <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
@@ -118,6 +118,43 @@
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                     <button type="submit" class="btn btn-success">Submit</button>
 				</div>
+			</form>
+           </div>
+		</div>
+	</div>
+</div>
+
+<!-- View Student Modal HTML -->
+<div id="viewStudentModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+            <div class="modal-header">						
+				<h4 class="modal-title">Student Info</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+            <div class="modal-body">
+			<form id="viewstudentForm">
+                <input type="hidden" id="id" name="id">				
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name3">
+				</div>
+				<div class="form-group">
+					<label for="address">Address</label>
+					<input type="text" class="form-control" id="address3">
+				</div>
+				<div class="form-group">
+					<label for="city">City</label>
+					<input type="text" class="form-control" id="city3">
+				</div>
+				<div class="form-group">
+					<label for="pin_code">Pin Code</label>
+					<input type="text" class="form-control"  id="pin_code3">
+				</div>
+                <div class="form-group">
+					<label for="country">Country</label>
+					<input type="text" class="form-control" id="country3">
+				</div>	
 			</form>
            </div>
 		</div>
@@ -213,13 +250,29 @@
      	{
      		if(response)
      		{
-     			$("#studentTable tbody").prepend('<tr><td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$student->id}}"/></td> <td>'+response.id+'</td> <td>'+response.name+'</td> <td>'+response.address+'</td> <td>'+response.city+'</td> <td>'+response.pin_code+'</td> <td>'+response.country+'</td><td><a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>  <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td></tr>');
+     			$("#studentTable tbody").prepend('<tr><td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$student->id}}"/></td> <td>'+response.id+'</td> <td>'+response.name+'</td> <td>'+response.address+'</td> <td>'+response.city+'</td> <td>'+response.pin_code+'</td> <td>'+response.country+'</td> <td><a href="javascript:void(0)" onclick="viewStudent({{$student->id}})" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a> <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td></tr>');
      			$("#studentForm")[0].reset();
      			$("#addStudentModal").modal('hide');
      		}
      	}
      });
 	});
+</script>
+
+<!--View Student -->
+<script>
+  function viewStudent(id)
+  {
+    $.get('/student/'+id,function(student){
+            $("#id").val(student.id);
+            $("#name3").val(student.name);
+            $("#address3").val(student.address);
+            $("#city3").val(student.city);
+            $("#pin_code3").val(student.pin_code);
+            $("#country3").val(student.country);
+            $("#viewStudentModal").modal('toggle');
+        });
+  }
 </script>
 
 <!--Edit Student -->
