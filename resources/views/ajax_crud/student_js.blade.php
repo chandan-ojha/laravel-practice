@@ -1,3 +1,5 @@
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
 <!--For Ajax SetUp-->
 <script>
     $.ajaxSetup({
@@ -35,7 +37,26 @@
                 $("#addStudentModal").modal('hide');
      			$("#studentForm")[0].reset();
                 $('.table').load(location.href+' .table');
+                //another way to show data in table
                 // $("#studentTable tbody").prepend('<tr><td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$student->id}}"/></td> <td>'+response.id+'</td> <td>'+response.name+'</td> <td>'+response.address+'</td> <td>'+response.city+'</td> <td>'+response.pin_code+'</td> <td>'+response.country+'</td> <td><a href="javascript:void(0)" onclick="viewStudent({{$student->id}})" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a> <a href="javascript:void(0)" onclick="editStudent({{$student->id}})" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> <a href="javascript:void(0)" onclick="deleteStudent({{$student->id}})" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td></tr>');
+                Command: toastr["success"]("Student Added Successfully!","Success")
+                toastr.options = {
+                       "closeButton": true,
+                       "debug": false,
+                       "newestOnTop": false,
+                       "progressBar": true,
+                       "positionClass": "toast-top-right",
+                       "preventDuplicates": false,
+                       "onclick": null,
+                       "showDuration": "300",
+                       "hideDuration": "1000",
+                       "timeOut": "5000",
+                       "extendedTimeOut": "1000",
+                       "showEasing": "swing",
+                       "hideEasing": "linear",
+                       "showMethod": "fadeIn",
+                       "hideMethod": "fadeOut"
+                    }
      		}
      	},error:function(err){
             let error = err.responseJSON;
@@ -108,13 +129,32 @@
                $("#editStudentModal").modal('hide');
                $("#editstudentForm")[0].reset();
                $('.table').load(location.href+' .table');
-
+               //another way to show update data in table
                /** $('#sid' + response.id + 'td:nth-child(1)').text(response.id);
                $('#sid' + response.id + 'td:nth-child(2)').text(response.name);
                $('#sid' + response.id + 'td:nth-child(3)').text(response.address);
                $('#sid' + response.id + 'td:nth-child(4)').text(response.city);
                $('#sid' + response.id + 'td:nth-child(5)').text(response.pin_code);
                $('#sid' + response.id + 'td:nth-child(6)').text(response.country); **/
+
+               Command: toastr["success"]("Student Updated Successfully!","Success")
+               toastr.options = {
+                       "closeButton": true,
+                       "debug": false,
+                       "newestOnTop": false,
+                       "progressBar": true,
+                       "positionClass": "toast-top-right",
+                       "preventDuplicates": false,
+                       "onclick": null,
+                       "showDuration": "300",
+                       "hideDuration": "1000",
+                       "timeOut": "5000",
+                       "extendedTimeOut": "1000",
+                       "showEasing": "swing",
+                       "hideEasing": "linear",
+                       "showMethod": "fadeIn",
+                       "hideMethod": "fadeOut"
+                    }
             }   
         },error:function(err){
             let error = err.responseJSON;
@@ -144,6 +184,25 @@
                 success:function(response)
                 {
                     $("#sid"+id).remove();
+
+                    Command: toastr["success"]("Student Deleted!","Success")
+                    toastr.options = {
+                       "closeButton": true,
+                       "debug": false,
+                       "newestOnTop": false,
+                       "progressBar": true,
+                       "positionClass": "toast-top-right",
+                       "preventDuplicates": false,
+                       "onclick": null,
+                       "showDuration": "300",
+                       "hideDuration": "1000",
+                       "timeOut": "5000",
+                       "extendedTimeOut": "1000",
+                       "showEasing": "swing",
+                       "hideEasing": "linear",
+                       "showMethod": "fadeIn",
+                       "hideMethod": "fadeOut"
+                    }
                 }
 
             });

@@ -75,11 +75,11 @@ class StudentController extends Controller
         );
 
         $student=Student::find($request->id);
-        $student->name=$request->name;
-        $student->address=$request->address;
-        $student->city=$request->city;
-        $student->pin_code=$request->pin_code;
-        $student->country=$request->country;
+        $student->name = $request->name;
+        $student->address = $request->address;
+        $student->city = $request->city;
+        $student->pin_code = $request->pin_code;
+        $student->country = $request->country;
         $student->save();
         return response()->json([
             'status' => 'success',
