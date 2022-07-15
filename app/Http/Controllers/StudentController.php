@@ -14,12 +14,28 @@ class StudentController extends Controller
     //~ Shows all Students Info
     public function index(){
         $students = Student::orderBy('id','DESC')->get();
-        return view('students',compact('students'));
+        return view('ajax_crud.students',compact('students'));
     }
 
     //~ Store Student Info
     public function addStudent(Request $request)
     {
+        $request->validate(
+            [
+               'name' => 'required',
+               'address' => 'required',
+               'city' => 'required',
+               'pin_code' => 'required',
+               'country' => 'required', 
+            ],
+            [
+                'name.required' => 'Name is Required',
+                'address.required' => 'Address is Required',
+                'city.required' => 'City is Required',
+                'pin_code.required' => 'Pin Code is Required',
+                'country.required' => 'Country is Required',
+            ]
+        );
         $student = new Student();
         $student->name = $request->name;
         $student->address = $request->address;
@@ -27,7 +43,9 @@ class StudentController extends Controller
         $student->pin_code = $request->pin_code;
         $student->country = $request->country;
         $student->save();
-        return response()->json($student);
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     //~ Get Student Info
@@ -39,6 +57,23 @@ class StudentController extends Controller
     //~ Update Student Info
     public function updateStudent(Request $request)
     {
+        $request->validate(
+            [
+               'name' => 'required',
+               'address' => 'required',
+               'city' => 'required',
+               'pin_code' => 'required',
+               'country' => 'required', 
+            ],
+            [
+                'name.required' => 'Name is Required',
+                'address.required' => 'Address is Required',
+                'city.required' => 'City is Required',
+                'pin_code.required' => 'Pin Code is Required',
+                'country.required' => 'Country is Required',
+            ]
+        );
+
         $student=Student::find($request->id);
         $student->name=$request->name;
         $student->address=$request->address;
@@ -46,7 +81,9 @@ class StudentController extends Controller
         $student->pin_code=$request->pin_code;
         $student->country=$request->country;
         $student->save();
-        return response()->json($student);
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     //~ Delete Student Record
@@ -77,7 +114,7 @@ class StudentController extends Controller
     //~ Export Students Table Data to PDF
     public function downloadPDFStudents(){
         $students = Student::all();
-        $pdf = PDF::loadView('students-pdf',compact('students'));
+        $pdf = PDF::loadView('ajax_crud.students-pdf',compact('students'));
         return $pdf->download('students.pdf');
     }
 
