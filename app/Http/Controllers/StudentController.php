@@ -13,7 +13,7 @@ class StudentController extends Controller
 {
     //~ Shows all Students Info
     public function index(){
-        $students = Student::orderBy('id','DESC')->get();
+        $students = Student::orderBy('id','DESC')->paginate(5);
         return view('ajax_crud.students',compact('students'));
     }
 
@@ -122,5 +122,11 @@ class StudentController extends Controller
     public function importStudents(Request $request){
         $studentdata = Excel::import(new StudentImport,$request->file);
         return redirect()->back()->with('studentdata');
+    }
+
+    //Pagination
+    public function pagination(Request $request){
+        $students = Student::orderBy('id','DESC')->paginate(5);
+        return view('ajax_crud.pagination_student',compact('students'))->render();
     }
 }

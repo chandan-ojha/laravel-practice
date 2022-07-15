@@ -243,5 +243,23 @@
     });
 </script>
 
+<!--Pagination-->
+<script>
+    $(document).on('click','.pagination a',function(e){
+      e.preventDefault();
+      let page = $(this).attr('href').split('page=')[1]
+      student(page)
+    });
+
+    function student(page){
+      $.ajax({
+        url: "/pagination/paginate-data?page="+page,
+        success:function(res){
+           $('.table-data').html(res)
+        }
+      })
+    }
+</script>
+
 <!-- JS here -->
 <script src="{{ asset('assets/students/students.js') }}"></script>

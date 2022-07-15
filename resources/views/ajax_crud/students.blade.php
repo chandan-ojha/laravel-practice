@@ -55,6 +55,7 @@
                     </div>
                 </div>
             </div>
+            <div class="table-data">
             <table class="table table-striped table-hover table-bordered" id="studentTable">
                 <thead>
                     <tr>
@@ -87,7 +88,8 @@
                     @endforeach      
                 </tbody>
             </table>
-            <div class="clearfix">
+            {{ $students->links() }}
+            <!-- <div class="clearfix">
                 <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
@@ -98,6 +100,7 @@
                     <li class="page-item"><a href="#" class="page-link">5</a></li>
                     <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
                 </ul>
+            </div> -->
             </div>
         </div>
     </div>  
