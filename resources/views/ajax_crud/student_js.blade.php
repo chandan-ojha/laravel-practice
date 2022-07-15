@@ -261,5 +261,25 @@
     }
 </script>
 
+<!--Search-->
+<script>
+    $(document).on('keyup',function(e){
+        e.preventDefault();
+        let search_string = $('#search').val();
+        // console.log(search_string);
+        $.ajax({
+            url : "{{route('search.student')}}",
+            method : 'GET',
+            data : {search_string:search_string},
+            success : function(res){
+                $('.table-data').html(res);
+                if(res.status == 'nothing_found'){
+                    $('.table-data').html('<span class="text-danger">'+'Data Not Found'+'</span>');
+                }
+            }
+        });
+    })
+</script>
+
 <!-- JS here -->
 <script src="{{ asset('assets/students/students.js') }}"></script>

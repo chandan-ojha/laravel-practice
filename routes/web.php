@@ -28,6 +28,7 @@ Route::get('/export-csv-students',[StudentController::class,'exportCSVStudents']
 Route::get('/download-pdf-students',[StudentController::class,'downloadPDFStudents'])->name('download-pdf-students');
 Route::post('/import-students',[StudentController::class,'importStudents'])->name('import-students');
 Route::get('/pagination/paginate-data',[StudentController::class,'pagination']);
+Route::get('/search-student',[StudentController::class,'searchStudent'])->name('search.student');
 
 
 

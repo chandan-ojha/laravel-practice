@@ -129,4 +129,23 @@ class StudentController extends Controller
         $students = Student::orderBy('id','DESC')->paginate(5);
         return view('ajax_crud.pagination_student',compact('students'))->render();
     }
+
+    //Search Student
+    public function searchStudent(Request $request){
+        $students = Student::where('name','like','%'.$request->search_string.'%')
+        ->orWhere('address','like','%'.$request->search_string.'%')
+        ->orderBy('id','desc')
+        ->paginate(5);
+
+        if($students->count() >= 1)
+        {
+            return view('ajax_crud.pagination_student',compact('students'))->render();
+        }
+        else
+        {
+            return response()->json([
+                'status' => "nothing_found",
+            ]);
+        }
+    }
 }
