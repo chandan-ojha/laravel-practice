@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,12 @@ Route::get('/search-student',[StudentController::class,'searchStudent'])->name('
 
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+/*Social Login*/
+
+Route::get('login/facebook',[SocialController::class,'facebookRedirect']);
+Route::get('login/facebook/callback',[SocialController::class,'loginWithFacebook']);
