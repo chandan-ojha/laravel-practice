@@ -40,5 +40,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 /*Social Login*/
 
+/*Facebook Login*/
 Route::get('login/facebook',[SocialController::class,'facebookRedirect']);
 Route::get('login/facebook/callback',[SocialController::class,'loginWithFacebook']);
+
+/*Google Login*/
+Route::get('login/google',[SocialController::class,'googleRedirect']);
+Route::get('/login/google/callback',[SocialController::class,'loginWithGoogle']);

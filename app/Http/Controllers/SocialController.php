@@ -9,19 +9,19 @@ use Auth;
 
 class SocialController extends Controller
 {
-    /** Redirect **/
+    /** Login With Facebook **/
+
     public function facebookRedirect(){
         return Socialite::driver('facebook')->redirect();
     }
 
-    /** Login With Facebook **/
     public function loginWithFacebook(){
         $user = Socialite::driver('facebook')->stateless()->user();
         $finduser = User::where('facebook_id',$user->id)->first();
 
         if($finduser){
             Auth::login($finduser);
-            redirect('/');
+            return redirect('/home');
         }else{
             $new_user = new User();
             $new_user->name = $user->name;
@@ -30,7 +30,33 @@ class SocialController extends Controller
             $new_user->password = bcrypt('123456');
             $new_user->save();
             Auth::login($new_user);
-            redirect('/');
+            return redirect('/home');
         }
     }
+
+    /** Login With Google **/
+
+    public function googleRedirect(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function loginWithGoogle(){
+        $user = Socialite::driver('google')->stateless()->user();
+        $finduser = User::where('google_id',$user->id)->first();
+
+        if($finduser){
+            Auth::login($finduser);
+            return redirect('/home');
+        }else{
+            $new_user = new User();
+            $new_user->name = $user->name;
+            $new_user->email= $user->email;
+            $new_user->google_id = $user->id;
+            $new_user->password = bcrypt('123456');
+            $new_user->save();
+            Auth::login($new_user);
+            return redirect('/home');
+        }
+    }
+    
 }
