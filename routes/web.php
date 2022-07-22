@@ -47,3 +47,7 @@ Route::get('login/facebook/callback',[SocialController::class,'loginWithFacebook
 /*Google Login*/
 Route::get('login/google',[SocialController::class,'googleRedirect']);
 Route::get('/login/google/callback',[SocialController::class,'loginWithGoogle']);
+
+/*Github Login*/
+Route::get('login/github',[SocialController::class,'githubRedirect']);
+Route::get('/login/github/callback',[SocialController::class,'loginWithGithub']);

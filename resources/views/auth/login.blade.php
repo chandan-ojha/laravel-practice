@@ -51,7 +51,7 @@
                                 <p>Login With </p>
                                 <a href="{{url('login/facebook')}}" class="btn btn btn-primary">Facebook</a>
                                 <a href="{{url('login/google')}}" class="btn btn btn-danger">Google</a>
-                                <a href="" class="btn btn btn-dark">Github</a>
+                                <a href="{{url('login/github')}}" class="btn btn btn-dark">Github</a>
                             </div> 
                         </div>
 

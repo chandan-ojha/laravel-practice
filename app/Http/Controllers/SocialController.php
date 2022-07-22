@@ -59,4 +59,28 @@ class SocialController extends Controller
         }
     }
     
+    /** Login With Github **/
+    
+    public function githubRedirect(){
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function loginWithGithub(){
+        $user = Socialite::driver('github')->stateless()->user();
+        $finduser = User::where('github_id',$user->id)->first();
+
+        if($finduser){
+            Auth::login($finduser);
+            return redirect('/home');
+        }else{
+            $new_user = new User();
+            $new_user->name = $user->name;
+            $new_user->email= $user->email;
+            $new_user->github_id = $user->id;
+            $new_user->password = bcrypt('123456');
+            $new_user->save();
+            Auth::login($new_user);
+            return redirect('/home');
+        }
+    }
 }
