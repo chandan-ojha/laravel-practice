@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestController;
+use App\Models\User;
+use App\Notifications\EmailNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/*Ajax Crud*/
+
 Route::get('/students',[StudentController::class,'index']);
 Route::post('/add-student',[StudentController::class,'addStudent'])->name('student.add');
 Route::get('/student/{id}',[StudentController::class,'getStudentById']);
@@ -32,6 +38,7 @@ Route::get('/pagination/paginate-data',[StudentController::class,'pagination']);
 Route::get('/search-student',[StudentController::class,'searchStudent'])->name('search.student');
 
 
+/*User Authentication*/
 
 Auth::routes();
 
@@ -51,3 +58,16 @@ Route::get('/login/google/callback',[SocialController::class,'loginWithGoogle'])
 /*Github Login*/
 Route::get('login/github',[SocialController::class,'githubRedirect']);
 Route::get('/login/github/callback',[SocialController::class,'loginWithGithub']);
+
+/*Notification*/
+
+Route::get('/send-notification',function(){
+    $user = User::find(2);
+    //$user->notify(new EmailNotification());
+    Notification::send($user, new EmailNotification());
+
+
+    return redirect('/');
+});
+
+Route::get('/sendnotification',[TestController::class,'sendNotification']);
