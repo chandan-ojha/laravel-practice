@@ -8,8 +8,8 @@
 </head>
 <body>
     <h2>Hello</h2>
-    <h3>This is me Chandan Ojha</h3>
-    <h3>from MononSoft</h3>
+    <h3>{{$name}}</h3>
+    <h3>{{$designation}}</h3>
     <p>Department of ERP</p>
 </body>
 </html>

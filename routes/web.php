@@ -67,7 +67,7 @@ Route::get('/send-notification',function(){
     //Notification::send($user, new EmailNotification());
     $users = User::all();
     foreach($users as $user){
-        Notification::send($user, new EmailNotification());
+        Notification::send($user, new EmailNotification('Chandan','Junior Software Engineer'));
     }
     return redirect('/');
 });
