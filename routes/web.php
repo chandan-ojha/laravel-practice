@@ -62,11 +62,13 @@ Route::get('/login/github/callback',[SocialController::class,'loginWithGithub'])
 /*Notification*/
 
 Route::get('/send-notification',function(){
-    $user = User::find(2);
+    //$user = User::find(2);
     //$user->notify(new EmailNotification());
-    Notification::send($user, new EmailNotification());
-
-
+    //Notification::send($user, new EmailNotification());
+    $users = User::all();
+    foreach($users as $user){
+        Notification::send($user, new EmailNotification());
+    }
     return redirect('/');
 });
 
