@@ -7,12 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailNotification extends Notification
+class EmailNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $name = '';
     public $designation = '';
-    
+
     public function __construct($name,$designation)
     {
         $this->name = $name;
